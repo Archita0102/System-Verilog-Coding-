@@ -4,7 +4,12 @@ A detailed summary of System Verilog Assignments from an Udemy course
 
 ## Table of Contents 
   
- * [Assignment 1: Signals](#assignment-1) 
+ * [Assignment 1: Signals](#assignment-1)
+ * [Assignment 2: Signals](#assignment-2)
+ * [Assignment 3: Signals](#assignment-3)
+* [Assignment 4: Signals](#assignment-4)
+  * [Assignment 5: Signals](#assignment-5)
+  * [Assignment 6: Signals](#assignment-6) 
      
  * [Acknowledgement](#acknowledgement) 
  
@@ -28,4 +33,28 @@ A detailed summary of System Verilog Assignments from an Udemy course
   ####  Assignment 5: 
  ##### Assume you have four variables ( a, b,c, and d )  in your testbench top. a and b are of the 8-bit reg type, while c and d are of the integer type. initialize a,b,c, and d to values of 12, 34, 67, and 255 respectively. Add a code to print the values of all the variables after 12 nSec.
  
+ `timescale 1ns/1ps
+
+module tb();
+   
+  byte a=0;
+  byte b=0;
+  int c=0;
+  int d=0;
+  
+  initial begin
+    a=8'd12;
+    b=8'd64;
+    c=67;
+    d=255;
+  end
+  
+  initial begin
+    $display("Values of a : %0d  b:%0d  c:%0d and d:%0d",a,b,c,d);
+  end
+endmodule
+
+
+  ####  Assignment 6: 
+ ##### Assume you have four variables ( a, b,c, and d )  in your testbench top. a and b are of the 8-bit reg type, while c and d are of the integer type. initialize a,b,c, and d to values of 12, 34, 67, and 255 respectively. Add a code to print the values of all the variables after 12 nSec.
  
