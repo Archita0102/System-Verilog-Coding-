@@ -165,3 +165,52 @@ module tb();
   
  
 endmodule
+
+####  Assignment 10: 
+ ##### Create a Class consisting of 3 data members each of unsigned integer type. Initialize them to 45,78, and 90. Use the display function to print the values on the console.
+
+`timescale 1ns/1ps
+
+class first;
+  
+ int a,b,c;
+  
+endclass
+module tb();
+	
+ first f;
+  initial begin
+    f=new();
+    f.a=45;
+    f.b=78;
+    f.c=90;
+    #5;
+    $display("a:%0d b:%0d c:%0d",f.a,f.b,f.c);
+  end
+endmodule
+
+####  Assignment 11: 
+ ##### CCreate a function that will perform the multiplication of the two unsigned integer variables.
+
+ module tb();
+	
+  function int unsigned  multiply();
+    return ain*bin;
+  endfunction
+  int unsigned res=0;
+  int unsigned ain=2;
+  int unsigned bin=4;
+  
+  initial begin
+    res=multiply();
+    $display("%0d",res);
+    a=2;
+    b=4;
+     mul=a*b;
+    $display("%0d",mul);
+   
+  end
+endmodule
+
+####  Assignment 12: 
+ ##### CCreate a function that will perform the multiplication of the two unsigned integer variables.
