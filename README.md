@@ -190,7 +190,7 @@ module tb();
 endmodule
 
 ####  Assignment 11: 
- ##### CCreate a function that will perform the multiplication of the two unsigned integer variables.
+ ##### Create a function that will perform the multiplication of the two unsigned integer variables.
 
  module tb();
 	
@@ -213,4 +213,42 @@ endmodule
 endmodule
 
 ####  Assignment 12: 
- ##### CCreate a function that will perform the multiplication of the two unsigned integer variables.
+ ##### Create a task that will generate stimulus for addr , wr, and en signal as mentioned in a waveform of the Instruction tab. Assume address is 6-bit wide while en and wr both are 1-bit wide. The stimulus should be sent on a positive edge of 25 MHz clock signal.
+
+ ![image](https://github.com/Archita0102/System-Verilog-Coding-/assets/66164675/277eeff6-16f6-4550-8e7b-e0f2170e778f)
+
+ `timescale 1ns/1ps
+
+module tb();
+
+  bit clk=0;
+  bit wr,en=0;
+  bit [5:0]addr=0;
+  
+  always #10 clk=~clk;
+  
+  task sim_clk();
+    @(posedge clk)
+    en=1;wr=1;
+    addr=12;
+    #20 addr=14;
+    #20 addr=23;wr=0;
+    #20 addr=48;
+    #20 addr=56;en=0;
+    
+  endtask
+  initial begin
+    #110;
+    $finish();
+  end
+  initial begin   
+    $dumpfile("dump.vcd");
+    $dumpvars;
+ end
+  initial begin
+     sim_clk();
+  end
+endmodule
+
+####  Assignment 13: 
+ ##### Create a task that will generate stimulus for addr , wr, and en signal as mentioned in a waveform of the Instruction tab. Assume address is 6-bit wide while en and wr both are 1-bit wide. The stimulus should be sent on a positive edge of 25 MHz clock signal.
