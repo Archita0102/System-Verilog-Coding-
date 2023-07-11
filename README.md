@@ -251,4 +251,26 @@ module tb();
 endmodule
 
 ####  Assignment 13: 
- ##### Create a task that will generate stimulus for addr , wr, and en signal as mentioned in a waveform of the Instruction tab. Assume address is 6-bit wide while en and wr both are 1-bit wide. The stimulus should be sent on a positive edge of 25 MHz clock signal.
+ ##### Create a function that generate and return 32 values of multiple of 8 (0, 8, 16, 24, 32, 40 .... 248). Store this value in the local array of the testbench top and also print the value of each element of this array on the console.
+
+ `timescale 1ns/1ps
+
+module tb();
+
+  int res [32];
+  
+  function automatic void arr(ref int a[32]);
+    for(int i=0;i<=31;i++)
+      begin
+        a[i]=i*8;
+      end
+  endfunction
+  
+  initial begin
+    arr(res);
+    for (int i=0;i<=31;i++)
+      begin
+        $display("%0d",res[i]);
+      end
+  end
+endmodule
