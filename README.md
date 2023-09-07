@@ -4,10 +4,10 @@ A detailed summary of System Verilog Assignments from an Udemy course
 
 ## Table of Contents 
   
- * [Assignment 1: Signals](#assignment-1)
- * [Assignment 2: Signals](#assignment-2)
- * [Assignment 3: Signals](#assignment-3)
-* [Assignment 4: Signals](#assignment-4)
+ * [Assignment 1: Introduction to Initial Block](#assignment-1)
+ * [Assignment 2: Introduction to Always block](#assignment-2)
+ * [Assignment 3: Intoduction to Timescale Directive](#assignment-3)
+* [Assignment 4: Generating clock](#assignment-4)
 * [Assignment 5: Variables](#assignment-5)
 * [Assignment 6: Initialization of arrays](#assignment-6)
 * [Assignment 7: Signals](#assignment-6) 
@@ -19,16 +19,154 @@ A detailed summary of System Verilog Assignments from an Udemy course
  #### Assignment 1: 
  ##### Assume System Consist of two global signals resetn and clk. Use an initial block to initialize clk to 1'b0 and resetn to 1'b0. User must keep resetn in an active low state for 60 nSec at the start of the simulation and then make active high. Assume `timescale 1ns/1ps
 
+ `timescale 1ns / 1ps
+
+module tb();
+/////global signal clk , rst
+	reg clk;
+	reg resetn;
+  initial begin
+
+    clk = 1'b0;
+
+    rst = 1'b0;
+
+  end
+
+  initial begin
+
+    rst = 1'b0;
+
+    #60;
+
+    rst = 1'b1;
+
+  end
+endmodule
+
+
   ####  Assignment 2: 
   ##### Assume `timescale 1ps/1ps. Generate a 25 MHz square wave waveform for the Signal clk
+
+`timescale 1ps/1ps
+
+module tb();
+  
+  reg clk=1'b0;
+  always #20000 clk=~clk;
+  
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars;
+  end
+  
+  initial begin
+  #100000;
+    $finish();
+  end
+endmodule
 
 
   ####  Assignment 3: 
   #####  Write a code to generate a 9MHz square waveform for the signal sclk. Assume timescale with 1nsec time-unit and 3 digit precision.
 
+`timescale 1ns / 1ps   //10^3 -> 3
 
+module tb();
+
+  reg clk9 = 0;
+
+   always #55.55 clk9 = ~clk9;
+  initial begin
+
+    $dumpfile("dump.vcd");
+
+    $dumpvars;
+
+  end
+
+  initial begin
+
+    #200;
+
+    $finish();
+
+  end
+
+  
   ####  Assignment 4: 
  ##### Write a function capable of generating a square waveform with the help of period(in nSec) and duty cycle(0 to 1). The phase difference is assumed to be 0 for the entire system operation. Verify function behavior by generating waveform for the signal clk with period: 40 nsec and duty cycle: 0.4
+
+`timescale 1ns / 1ps
+
+module tb();
+
+  reg clk = 0;
+  reg clk50 = 0;
+  always #5 clk = ~clk; //100 MHz
+
+task calc (input real freq_hz, input real duty_cycle, input real phase, output real pout, output real ton, output real toff);
+
+pout = phase;
+
+ton = (1.0 / freq_hz) * duty_cycle * 1000_000_000;
+
+toff =  (1000_000_000 / freq_hz) - ton;
+
+endtask
+
+task clkgen(input real phase, input real ton, input real toff); 
+
+  @(posedge clk);
+
+  #phase;
+
+  while(1) begin
+
+  clk50 = 1;
+
+  #ton;
+
+  clk50 = 0;
+
+  #toff;
+
+  end
+
+endtask
+
+real phase;
+
+real ton;
+
+real toff;
+
+initial begin
+
+  calc(25_000_000, 0.4, 0, phase, ton, toff);
+
+clkgen(phase, ton, toff);
+
+end
+
+initial begin
+
+   $dumpfile("dump.vcd");
+
+   $dumpvars;
+
+end
+
+  initial begin
+
+    #200;
+
+    $finish();
+
+  end
+
+endmodule
+
 
 
   ####  Assignment 5: 
